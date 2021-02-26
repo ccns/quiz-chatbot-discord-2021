@@ -68,12 +68,19 @@ async def status(ctx):
 
 @bot.event
 async def on_raw_reaction_add(payload):
-    if payload.user_id != bot.user.id:
-        channel = await bot.fetch_channel(payload.channel_id)
+    u_id = payload.user_id
+    channel = await bot.fetch_channel(payload.channel_id)
+
+    if u_id != bot.user.id:
+        if u_id not in users:
+            await channel.send('發生了點小問題，請輸入 start 重新啟動😵')
+            logger.warning('something wrong happend, user id not in users list')
+            return
+        
         message = await channel.fetch_message(payload.message_id)
         embed = message.embeds[0].to_dict()
         index = embed['title']
-        user = users[payload.user_id]
+        user = users[u_id]
         answer = 0
         
         for emoji in emojis:
@@ -81,7 +88,7 @@ async def on_raw_reaction_add(payload):
                 break
             answer += 1
         
-        if answer<4 and users[payload.user_id].check_ans(index, answer):
+        if answer<4 and users[u_id].check_ans(index, answer):
             await channel.send(get_provoke('true'))
             await bot.get_command('_send_prob').callback(channel, user)
         else:
