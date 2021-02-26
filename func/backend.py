@@ -37,6 +37,9 @@ def get_ans(payload):
     res = requests.post(urljoin(HOST, '/answers/'), data=payload)
     logger.info(res.url)
 
+    if res.status_code == 409:
+        return "error"
+
     return res.json()['correct']
 
 def get_provoke(correctness):

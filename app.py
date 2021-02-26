@@ -88,7 +88,13 @@ async def on_raw_reaction_add(payload):
                 break
             answer += 1
         
-        if answer<4 and users[u_id].check_ans(index, answer):
+        correctness = users[u_id].check_ans(index, answer)
+        
+        if not correctness:
+            await channel.send('你已經答過題目了，不要再重複回答😡')
+            return
+
+        if answer<4 and correctness:
             await channel.send(get_provoke('true'))
             await bot.get_command('_send_prob').callback(channel, user)
         else:
