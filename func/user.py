@@ -1,5 +1,6 @@
 from . import backend
 from pprint import pprint
+from .logger import logger
 from typing import Dict, List
 from dataclasses import dataclass
 
@@ -49,6 +50,10 @@ class User:
         return prob
 
     def check_ans(self, title, answer):
+        if title not in self.prob_list:
+            logger.warn('can not find quiz in user\'s prob list')
+            return "index error"
+
         payload = {
             "player_uuid": self.uuid,
             "quiz_uuid": self.prob_list[title]['quiz_uuid'],

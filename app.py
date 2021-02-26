@@ -90,6 +90,10 @@ async def on_raw_reaction_add(payload):
         
         correctness = users[u_id].check_ans(index, answer)
         
+        if correctness == "index error":
+            await channel.send('你 484 想偷答別人的題目啊😒')
+            return
+        
         if correctness == "error":
             await channel.send('你已經答過題目了，不要再重複回答😡')
             return
