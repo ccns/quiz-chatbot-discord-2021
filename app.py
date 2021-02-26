@@ -96,9 +96,10 @@ async def on_raw_reaction_add(payload):
 
         if answer<4 and correctness:
             await channel.send(get_provoke('true'))
-            await bot.get_command('_send_prob').callback(channel, user)
         else:
             await channel.send(get_provoke('false'))
+        
+        await bot.get_command('_send_prob').callback(channel, user)
 
 if __name__ == '__main__':
     bot.run(TOKEN)
