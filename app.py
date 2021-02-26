@@ -26,8 +26,9 @@ async def _send_prob(channel, user):
     if not prob:
         channel.send('你已經完成題目囉，再 start 一次就可以重新練習了😘')
     else:
+        _user = await bot.fetch_user(user.u_id)
         embed = make_prob_embed(prob)
-        prob_msg = await channel.send(embed=embed)
+        prob_msg = await _user.send(embed=embed)
 
         for emoji in emojis:
             await prob_msg.add_reaction(emoji)
