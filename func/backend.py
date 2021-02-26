@@ -1,3 +1,4 @@
+import random
 import requests
 from .config import HOST
 from .logger import logger
@@ -44,9 +45,11 @@ def get_ans(payload):
 
 def get_provoke(correctness):
     res = requests.get(urljoin(HOST, '/provokes/?correct={}'.format(correctness)))
+    res_dict = res.json()
+    index = random.randint(0, len(res_dict))
     logger.info(res.url)
-    
-    return res.json()[0]['message']
+
+    return res_dict[index]['message']
 
 def get_status(uuid):
     res = requests.get(urljoin(HOST, '/players/{}/'.format(uuid)))
