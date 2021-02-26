@@ -27,7 +27,6 @@ def make_prob_embed(prob):
 
 def make_status_embed(profile):
     color = 0x00ffff
-    print(profile)
     content = '分數: {}\n\n 平台: {}'.format(
             profile['correct_count'],
             profile['platform']
