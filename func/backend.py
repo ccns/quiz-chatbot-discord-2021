@@ -35,13 +35,12 @@ def get_feed_rand(uuid):
 
 def get_ans(payload):
     res = requests.post(urljoin(HOST, '/answers/'), data=payload)
-    correctness = res.json()['correct']
     logger.info(res.url)
 
-    if res.status_code == 409 and correctness:
+    if res.status_code == 409:
         return "error"
 
-    return correctness
+    return res.json()['correct']
 
 def get_provoke(correctness):
     res = requests.get(urljoin(HOST, '/provokes/?correct={}'.format(correctness)))
