@@ -24,7 +24,7 @@ async def _send_prob(channel, user):
     prob = user.get_problem()
 
     if not prob:
-        chennel.send('你已經完成題目囉，再 start 一次就可以重新練習了😘')
+        channel.send('你已經完成題目囉，再 start 一次就可以重新練習了😘')
     else:
         embed = make_prob_embed(prob)
         prob_msg = await channel.send(embed=embed)
