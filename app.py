@@ -58,14 +58,15 @@ async def start(ctx):
 async def status(ctx):
     author = ctx.message.author
     u_id = author.id
+    _user = await bot.fetch_user(u_id)
     
     if u_id not in users:
-        await ctx.send('阿北初四了阿北，請先使用 start 註冊帳號🤷')
+        await _user.send('阿北初四了阿北，請先使用 start 註冊帳號🤷')
     else:
         profile = users[u_id].get_status()
         embed = make_status_embed(profile)
         
-        await ctx.send(embed=embed)
+        await _user.send(embed=embed)
 
 @bot.event
 async def on_raw_reaction_add(payload):
