@@ -54,11 +54,7 @@ class User:
             "quiz_uuid": self.prob_list[title]['quiz_uuid'],
             "answer": self.prob_list[title]['options'][answer]
         }
-        ans = backend.get_ans(payload)
-        
-        if ans == "error":
-            return
-
+        ans = backend.get_ans(payload) 
         return ans
 
     def get_status(self):
