@@ -46,7 +46,7 @@ def get_ans(payload):
 def get_provoke(correctness):
     res = requests.get(urljoin(HOST, '/provokes/?correct={}'.format(correctness)))
     res_dict = res.json()
-    index = random.randint(0, len(res_dict))
+    index = random.randint(0, len(res_dict)-1)
     logger.info(res.url)
 
     return res_dict[index]['message']
