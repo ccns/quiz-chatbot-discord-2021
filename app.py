@@ -101,9 +101,9 @@ async def on_raw_reaction_add(payload):
             return
 
         if answer<4 and correctness:
-            await channel.send(get_provoke('true'))
+            await channel.send('👌 ' + get_provoke('true'))
         else:
-            await channel.send(get_provoke('false'))
+            await channel.send('👎 ' + get_provoke('false'))
         
         await bot.get_command('_send_prob').callback(channel, user)
 
