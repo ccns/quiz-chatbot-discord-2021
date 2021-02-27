@@ -24,11 +24,10 @@ async def _send_prob(channel, user):
     prob = user.get_problem()
 
     if not prob:
-        channel.send('你已經完成題目囉，再 start 一次就可以重新練習了😘')
+        await user.dc_user.send('你已經完成題目囉，再 start 一次就可以重新練習了😘')
     else:
-        _user = await bot.fetch_user(user.u_id)
         embed = make_prob_embed(prob)
-        prob_msg = await _user.send(embed=embed)
+        prob_msg = await user.dc_user.send(embed=embed)
 
         for emoji in emojis:
             await prob_msg.add_reaction(emoji)
@@ -46,9 +45,8 @@ async def start(ctx):
         user = User(u_name, u_id, author)
         
         if not user.register():
-            await ctx.send('阿北初四了，請聯繫小編處理😵')
+            await user.dc_user.send('阿北初四了，請聯繫小編處理😵')
             return
-        print('dsadsa')
 
         users[u_id] = user
     else: user = users[u_id]
@@ -59,24 +57,24 @@ async def start(ctx):
 async def status(ctx):
     author = ctx.message.author
     u_id = author.id
-    _user = await bot.fetch_user(u_id)
     
     if u_id not in users:
-        await _user.send('阿北初四了阿北，請先使用 start 註冊帳號🤷')
+        await author.send('阿北初四了阿北，請先使用 start 註冊帳號🤷')
     else:
         profile = users[u_id].get_status()
         embed = make_status_embed(profile)
         
-        await _user.send(embed=embed)
+        await author.send(embed=embed)
 
 @bot.event
 async def on_raw_reaction_add(payload):
     u_id = payload.user_id
     channel = await bot.fetch_channel(payload.channel_id)
+    _user = await bot.fetch_user(u_id)
 
     if u_id != bot.user.id:
         if u_id not in users:
-            await channel.send('發生了點小問題，請輸入 start 重新啟動😵')
+            await _user.send('發生了點小問題，請輸入 start 重新啟動😵')
             logger.warning('something wrong happend, user id not in users list')
             return
         
@@ -94,17 +92,17 @@ async def on_raw_reaction_add(payload):
         correctness = users[u_id].check_ans(index, answer)
         
         if correctness == "index error":
-            await channel.send('你 484 想偷答別人的題目啊😒')
+            await user.dc_user.send('你 484 想偷答別人的題目啊😒')
             return
         
         if correctness == "error":
-            await channel.send('你已經答過題目了，不要再重複回答😡')
+            await user.dc_user.send('你已經答過題目了，不要再重複回答😡')
             return
 
         if answer<4 and correctness:
-            await channel.send('👌 ' + get_provoke('true'))
+            await user.dc_user.send('👌 ' + get_provoke('true'))
         else:
-            await channel.send('👎 ' + get_provoke('false'))
+            await user.dc_user.send('👎 ' + get_provoke('false'))
         
         await bot.get_command('_send_prob').callback(channel, user)
 
