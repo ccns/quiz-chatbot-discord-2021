@@ -39,7 +39,7 @@ def get_ans(payload):
     logger.info(res.url)
 
     if res.status_code == 409:
-        return "error"
+        return "Error"
 
     return res.json()['correct']
 

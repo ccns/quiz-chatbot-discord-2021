@@ -91,11 +91,11 @@ async def on_raw_reaction_add(payload):
         
         correctness = users[u_id].check_ans(index, answer)
         
-        if correctness == "index error":
-            await user.dc_user.send('你 484 想偷答別人的題目啊😒')
+        if correctness == "Error Index":
+            await user.dc_user.send('發生了點小問題，請重新 start 😒')
             return
         
-        if correctness == "error":
+        if correctness == "Error":
             await user.dc_user.send('你已經答過題目了，不要再重複回答😡')
             return
 

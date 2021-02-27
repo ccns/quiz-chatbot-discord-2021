@@ -55,7 +55,7 @@ class User:
     def check_ans(self, title, answer):
         if title not in self.prob_list:
             logger.warn('can not find quiz in user\'s prob list')
-            return "index error"
+            return "Error iIndex"
 
         payload = {
             "player_uuid": self.uuid,
