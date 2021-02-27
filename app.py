@@ -41,13 +41,14 @@ async def start(ctx):
     channel = ctx.message.channel
     u_name = author.name
     u_id = author.id
-    
+
     if u_id not in users:
-        user = User(u_name, u_id)
+        user = User(u_name, u_id, author)
         
         if not user.register():
             await ctx.send('阿北初四了，請聯繫小編處理😵')
             return
+        print('dsadsa')
 
         users[u_id] = user
     else: user = users[u_id]

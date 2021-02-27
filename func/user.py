@@ -1,13 +1,16 @@
+import discord
+
 from . import backend
 from pprint import pprint
 from .logger import logger
-from typing import Dict, List
+from typing import Dict, List, Union
 from dataclasses import dataclass
 
 @dataclass
 class User:
     u_name: str
     u_id: str
+    dc_user: discord.User
     uuid: str = ''
     finished: bool = False
     prob_list = {}
