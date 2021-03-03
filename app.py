@@ -24,7 +24,7 @@ async def _send_prob(channel, user):
     prob = user.get_problem()
 
     if not prob:
-        await user.dc_user.send('你已經完成題目囉，再 start 一次就可以重新練習了😘')
+        await user.dc_user.send('感謝您遊玩我們準備的 Chatbot Q&A！\n我們的期初社團大會將在 3/11 (四) 晚上 19:00 在資訊系館 4201 教室舉行，詳細聚會資訊與教室位置圖請查詢最近 FB 粉絲專頁動態。歡迎來現場與我們聊天，也可以先加入 Discord 聊天群及關注粉絲專頁歐～\n\n[Discord Group] https://discord.ccns.io/\n[FB Fan-page] https://www.facebook.com/ncku.ccns')
     else:
         embed = make_prob_embed(prob)
         prob_msg = await user.dc_user.send(embed=embed)
@@ -50,6 +50,9 @@ async def start(ctx):
 
         users[u_id] = user
     else: user = users[u_id]
+    
+    if not user.prob_list:
+        await user.dc_user.send("```Hello World!\n歡迎參加 CCNS Chatbot Q&A 競賽，我們準備了數十題連出題者都不一定能答對的題目，前三名高分的玩家我們會在 3/11 (四) 期初社團大會進行頒獎！\n歡情嘗試各種方法取得高分，包含但不限於查 Stackoverflow、問資訊系教授、通靈以及熬夜刷題。```")
 
     await bot.get_command('_send_prob').callback(channel, user)
 
