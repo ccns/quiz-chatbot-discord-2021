@@ -25,7 +25,9 @@ def seacher(u_id):
 def get_feed(uuid):
     res = requests.get(urljoin(HOST, '/feeds/{}'.format(uuid)))
     logger.info(res.url)
-
+    
+    if not res.text:
+        return None
     return res.json()
 
 def get_feed_rand(uuid):
