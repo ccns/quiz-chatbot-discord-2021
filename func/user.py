@@ -38,7 +38,7 @@ class User:
 
     def get_problem(self):
         if self.finished:
-            prob = backend.get_feed_rand()
+            prob = backend.get_feed_rand(self.uuid)
         else:
             prob = backend.get_feed(self.uuid)
 
